@@ -10,4 +10,4 @@
 
 + TBD
 
-*[hat tip to DockYard for open-sourcing their styleguides](github.com/dockYard/styleguides)*
+*[hat tip to DockYard for open-sourcing their styleguides](https://github.com/dockYard/styleguides)*
