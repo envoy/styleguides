@@ -36,3 +36,9 @@ Partials have access to properties in their parent template's scope while
 components require any external properties used to be explicitly passed in. This
 prevents difficult to diagnose bugs, provides more confidence when
 refactoring. Components are also easier to test.
+
+## Tests
+
+### [ember-test-selectors](https://github.com/simplabs/ember-test-selectors)
+
+Use test selectors for any selectors added for testing purposes.
