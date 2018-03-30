@@ -39,8 +39,10 @@ this.get('isSelected');
 We use [pods structure](https://ember-cli.com/user-guide/#using-pods)
 
 When using ember-cli to generate files, use `--pod`
-```ember g component my-component --pod```
 
+```
+ember g component my-component --pod
+```
 ## Computed Properties
 
 ### Use brace expansion
