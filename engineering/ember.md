@@ -72,8 +72,4 @@ refactoring. Components are also easier to test.
 
 ### [ember-test-selectors](https://github.com/simplabs/ember-test-selectors)
 
-Import using the following syntax.
-
-```js
-import testSelector from 'ember-test-selectors';
-```
+Use test selectors for any selectors added for testing purposes.
