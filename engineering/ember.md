@@ -21,7 +21,7 @@ above, we still use `get`/`set`.
 
 ```js
 // Good
-import { get, set } from '@ember/object;
+import { get, set } from '@ember/object';
 
 set(this, 'isSelected', true);
 get(this, 'isSelected');
