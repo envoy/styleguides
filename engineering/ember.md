@@ -6,6 +6,33 @@
 * [Templates](#templates)
 * [Tests](#tests)
 
+## General
+
+### Use `get` and `set`
+
+Calling `someObj.get('prop')` couples your code to the fact that
+`someObj` is an Ember Object. It prevents you from passing in a
+POJO, which is sometimes preferable in testing. It also yields a more
+informative error when called with `null` or `undefined`.
+
+Although when defining a method in a controller, component, etc. you
+can be fairly sure `this` is an Ember Object, for consistency with the
+above, we still use `get`/`set`.
+
+```js
+// Good
+
+import { get, set } from '@ember/object';
+
+set(this, 'isSelected', true);
+get(this, 'isSelected');
+
+// Bad
+
+this.set('isSelected', true);
+this.get('isSelected');
+```
+
 ## Computed Properties
 
 ### Use brace expansion
@@ -15,13 +42,17 @@ This allows much less redundancy and is easier to read.
 Note that **the dependent keys must be together (without space)** for the brace expansion to work.
 
 ```js
+import { computed } from '@ember/object';
+
 // Good
-fullName: Ember.computed('user.{firstName,lastName}', {
+
+fullName: computed('user.{firstName,lastName}', {
   // Code
 })
 
 // Bad
-fullName: Ember.computed('user.firstName', 'user.lastName', {
+
+fullName: computed('user.firstName', 'user.lastName', {
   // Code
 })
 ```
@@ -41,16 +72,35 @@ refactoring. Components are also easier to test.
 
 ### [ember-test-selectors](https://github.com/simplabs/ember-test-selectors)
 
-Import using the following syntax.
+Use test selectors for any selectors added for testing purposes.
 
-```js
-import testSelector from 'ember-test-selectors';
+Example:
+
+```hbs
+<button data-test-save onclick={{action "save"}}>
+  Save
+</button>
 ```
 
 ### Use async/await when writing a test method
 
-This makes tests cleaner and easier to read
+This makes tests cleaner and easier to read.
 
-### Use data-test attribute tag when selecting
+```js
+test('page title is awesome', async function(assert) {
+  assert.expect(1);
 
-### [Use ember-cli-page-object](http://ember-cli-page-object.js.org/)
+  await visit('/');
+
+  assert.equal(this.element.querySelector('.page-title').textContent, 'Awesome Title!');
+});
+```
+
+References:
+
+- https://dockyard.com/blog/2018/01/11/modern-ember-testing
+- https://dockyard.com/blog/2018/01/18/test-helpers-the-next-generation
+
+### Page Objects
+
+We use [Use ember-cli-page-object](http://ember-cli-page-object.js.org/).
