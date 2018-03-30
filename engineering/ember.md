@@ -73,3 +73,34 @@ refactoring. Components are also easier to test.
 ### [ember-test-selectors](https://github.com/simplabs/ember-test-selectors)
 
 Use test selectors for any selectors added for testing purposes.
+
+Example:
+
+```hbs
+<button data-test-save onclick={{action "save"}}>
+  Save
+</button>
+```
+
+### Use async/await when writing a test method
+
+This makes tests cleaner and easier to read.
+
+```js
+test('page title is awesome', async function(assert) {
+  assert.expect(1);
+
+  await visit('/');
+
+  assert.equal(this.element.querySelector('.page-title').textContent, 'Awesome Title!');
+});
+```
+
+References:
+
+- https://dockyard.com/blog/2018/01/11/modern-ember-testing
+- https://dockyard.com/blog/2018/01/18/test-helpers-the-next-generation
+
+### Page Objects
+
+We use [Use ember-cli-page-object](http://ember-cli-page-object.js.org/).
