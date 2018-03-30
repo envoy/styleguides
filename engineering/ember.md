@@ -2,6 +2,7 @@
 
 ## Table Of Contents
 
+* [General](#general)
 * [Computed Properties](#computed-properties)
 * [Templates](#templates)
 * [Tests](#tests)
@@ -32,8 +33,6 @@ get(this, 'isSelected');
 this.set('isSelected', true);
 this.get('isSelected');
 ```
-
-## File system structures
 
 ### Pods
 
