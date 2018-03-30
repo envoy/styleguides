@@ -52,7 +52,7 @@ fullName: computed('user.{firstName,lastName}', {
 
 // Bad
 
-fullName: Ecomputed('user.firstName', 'user.lastName', {
+fullName: computed('user.firstName', 'user.lastName', {
   // Code
 })
 ```
