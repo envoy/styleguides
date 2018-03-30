@@ -46,3 +46,11 @@ Import using the following syntax.
 ```js
 import testSelector from 'ember-test-selectors';
 ```
+
+### Use async/await when writing a test method
+
+This makes tests cleaner and easier to read
+
+### Use data-test attribute tag when selecting
+
+### [Use ember-cli-page-object](http://ember-cli-page-object.js.org/)
