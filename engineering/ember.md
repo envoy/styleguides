@@ -36,7 +36,8 @@ this.get('isSelected');
 
 ### Pods
 
-We use [pods structure]([https://ember-cli.com/user-guide/#using-pods])
+We use [pods structure](https://ember-cli.com/user-guide/#using-pods)
+
 When using ember-cli to generate files, use `--pod`
 ```ember g component my-component --pod```
 
