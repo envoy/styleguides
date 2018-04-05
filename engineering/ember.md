@@ -2,6 +2,7 @@
 
 ## Table Of Contents
 
+* [General](#general)
 * [Computed Properties](#computed-properties)
 * [Templates](#templates)
 * [Tests](#tests)
@@ -33,6 +34,15 @@ this.set('isSelected', true);
 this.get('isSelected');
 ```
 
+### Pods
+
+We use [pods structure](https://ember-cli.com/user-guide/#using-pods)
+
+When using ember-cli to generate files, use `--pod`
+
+```
+ember g component my-component --pod
+```
 ## Computed Properties
 
 ### Use brace expansion
