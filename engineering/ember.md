@@ -48,7 +48,7 @@ ember g component my-component --pod
 
 ### Do not create components in zapatos
 
-We used to keep share components by adding it to zapatos, but we're moving away from this practice. Please share compoents by adding it to `/components`
+We used to share components by adding it to zapatos, but we're moving away from this practice. Please share components by adding it to `/components`
 
 ## Computed Properties
 
