@@ -4,6 +4,7 @@
 
 * [General](#general)
 * [Computed Properties](#computed-properties)
+* [Components](#components)
 * [Templates](#templates)
 * [Tests](#tests)
 
@@ -43,6 +44,12 @@ When using ember-cli to generate files, use `--pod`
 ```
 ember g component my-component --pod
 ```
+## Components
+
+### Do not create components in zapatos
+
+We used to keep share components by adding it to zapatos, but we're moving away from this practice. Please share compoents by adding it to `/components`
+
 ## Computed Properties
 
 ### Use brace expansion
@@ -114,3 +121,26 @@ References:
 ### Page Objects
 
 We use [Use ember-cli-page-object](http://ember-cli-page-object.js.org/).
+
+Example:
+
+```js
+import { create } from 'ember-cli-page-object';
+
+export default create({
+  visit: visitable('/awesome'),
+  title: {
+    scope: '[data-test-title]'
+  }
+```
+
+```js
+
+test('page title is awesome', async function(assert) {
+  assert.expect(1);
+
+  await page.visit;
+
+  assert.equal(page.title.text, 'Awesome Title!');
+});
+```
