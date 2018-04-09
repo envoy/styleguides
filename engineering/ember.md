@@ -74,6 +74,28 @@ fullName: computed('user.firstName', 'user.lastName', {
 })
 ```
 
+### Use read only computed property
+
+There are some computed properties is our code base are having getter and setter, allowing property to be changed. We're moving away from this practice. Computed property should be read only.
+
+Example:
+```js
+ // Bad
+
+fullName: computed('user.{firstName,lastName}', {
+  get() {
+  },
+  set(key, value) {
+    return value
+  }
+})
+
+// Good
+fullName: computed('user.{firstName,lastName}', function (){
+  // return full name
+}).readOnly()
+```
+
 ## Templates
 
 ### Don't use partials
