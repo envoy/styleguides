@@ -120,7 +120,7 @@ References:
 
 ### Page Objects
 
-We use [Use ember-cli-page-object](http://ember-cli-page-object.js.org/).
+We use [ember-cli-page-object](http://ember-cli-page-object.js.org/).
 
 Example:
 
