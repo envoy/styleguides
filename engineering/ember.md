@@ -35,6 +35,28 @@ this.set('isSelected', true);
 this.get('isSelected');
 ```
 
+### Use `config` object to check environment
+
+If you're in a situation where you need to check if the code you're running is in testing mode. Example: to prevenet a
+timer or do to an early return. Do not import `Ember` just for checking testing environment.
+
+```js
+// BAD
+import Ember from 'ember';
+if (Ember.testing) { ... }
+```
+
+```js
+// Good
+import config from 'garaje/config/environment';
+
+if (config.environment === 'test') { ... }
+
+// or if multiple conditionals
+
+const testing = config.environment === 'test';
+```
+
 ### Pods
 
 We use [pods structure](https://ember-cli.com/user-guide/#using-pods)
