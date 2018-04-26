@@ -48,7 +48,7 @@ if (Ember.testing) { ... }
 
 ```js
 // Good
-import config from 'garaje/config/environment';
+import config from 'app/config/environment';
 
 if (config.environment === 'test') { ... }
 
