@@ -64,8 +64,10 @@ module API
 
 
       # Filters
-      filter :location, apply: lambda { |records, values, _options|
-        records.where("flows.location_id IN (?)", values)
+      filters :name, :whatever
+
+      filter :location apply: lambda { |records, values, _options|
+        records.where("flows.location_id IN (?) AND flows.active==true", values)
       }
 
       # Method Overrides
