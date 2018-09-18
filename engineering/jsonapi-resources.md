@@ -23,7 +23,7 @@ Basic layout is should be in the following order, note that the contents of each
 
 Example Resource ( based on the FlowResource ):
 
-```
+```ruby
 module API
   module V3
     class ExampleResource < BaseResource
