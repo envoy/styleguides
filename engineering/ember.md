@@ -96,6 +96,47 @@ fullName: computed('user.firstName', 'user.lastName', {
 })
 ```
 
+### Avoid explicit getters
+
+This style has less code and is easier to understand because it's in line with what's in the Ember docs.
+
+An exception to this rule is if you need to define custom `set()` behavior.
+
+```js
+import { computed } from '@ember/object';
+
+// Bad
+
+fullName: computed('firstName', 'lastName', {
+  get() {
+    return [this.firstName, this.lastName].join(' ');
+  }
+})
+
+// Good
+
+fullName: computed('firstName', 'lastName', function() {
+  return [this.firstName, this.lastName].join(' ');
+})
+
+// Good - if you need to define set()
+
+fullName: computed('firstName', 'lastName', {
+  get() {
+    return [this.firstName, this.lastName].join(' ');
+  },
+  set(key, value) {
+    let [firstName, lastName] = value.split(' ');
+
+    this.set('firstName', firstName);
+    this.set('lastName', lastName);
+
+    return value;
+  }
+})
+
+```
+
 ## Templates
 
 ### Don't use partials
