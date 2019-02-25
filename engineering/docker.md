@@ -11,7 +11,7 @@ CMD wc --help
 Do this:
 ```
 FROM ubuntu
-CMD ["/usr/bin/wc","--help"]
+CMD ["/usr/bin/wc", "--help"]
 ```
 
 [Docs](https://docs.docker.com/engine/reference/builder/#cmd) state:
