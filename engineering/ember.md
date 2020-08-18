@@ -74,27 +74,6 @@ We used to share components by adding it to zapatos, but we're moving away from 
 
 ## Computed Properties
 
-### Use brace expansion
-
-This allows much less redundancy and is easier to read.
-
-Note that **the dependent keys must be together (without space)** for the brace expansion to work.
-
-```js
-import { computed } from '@ember/object';
-
-// Good
-
-fullName: computed('user.{firstName,lastName}', {
-  // Code
-})
-
-// Bad
-
-fullName: computed('user.firstName', 'user.lastName', {
-  // Code
-})
-```
 
 ### Avoid explicit getters
 
@@ -189,9 +168,9 @@ References:
 - https://dockyard.com/blog/2018/01/11/modern-ember-testing
 - https://dockyard.com/blog/2018/01/18/test-helpers-the-next-generation
 
-### Page Objects
+### DO NOT USE Page Objects
 
-We use [ember-cli-page-object](http://ember-cli-page-object.js.org/).
+~~We use~~ [ember-cli-page-object](http://ember-cli-page-object.js.org/).
 
 Example:
 
