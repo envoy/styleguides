@@ -139,6 +139,14 @@ fullName: computed('firstName', 'lastName', {
 
 ## Templates
 
+### {{#each}} - Specifying Keys
+
+To improve rendering speed, the `{{#each}}` helper favors reusing it's inner block. Behind the scenes Ember compares the identity of each object in the array. Where there is a difference that inner inner dom will be torn down and rerendered. By passing a `key` param we inform `{{#each}}` that it should only tear down its inner dom when a specific property has changed. This is important because componments with state will lose their state when torn down and rerenderd. Specifying a key is one way to make sure this doesn't happen on accident. [more info](https://api.emberjs.com/ember/3.20/classes/Ember.Templates.helpers/methods/each?anchor=each)...
+
+```hbs
+{{#each array key="<someProp>|@index|@identity" |item|}}
+```
+
 ### Don't use partials
 
 Use components instead of partials.
