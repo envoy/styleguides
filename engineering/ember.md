@@ -3,8 +3,12 @@
 ## Table Of Contents
 
 * [General](#general)
+* [Class syntax](#class-syntax)
 * [Computed Properties](#computed-properties)
 * [Components](#components)
+* [Data down Actions Up](#data-down-actions-up)
+* [Glimmer Components](glimmer-components)
+* [Tailwind CSS](tailwind-css)
 * [Templates](#templates)
 * [Tests](#tests)
 
@@ -68,9 +72,24 @@ ember g component my-component --pod
 ```
 ## Components
 
+### Modals
+
+- Standardized classes for modal design
+
+
+### UI:Button
+
+- Always use, as we set `type=button`
+
 ### Do not create components in zapatos
 
 We used to share components by adding it to zapatos, but we're moving away from this practice. Please share components by adding it to `/components`
+
+## Class Syntax
+
+### TODO
+
+For routes, controllers, components
 
 ## Computed Properties
 
@@ -116,7 +135,34 @@ fullName: computed('firstName', 'lastName', {
 
 ```
 
+## Glimmer Components
+
+### Component Args
+
+- constructor with setting local props, args with objects, chain in template or getter in JS?
+
+### Tracked properties
+
+- Concerns for mixed use of computed props passed down from existing controllers
+
+### Computed properties
+
+- Using computed properties instead of getter and setter
+
+
+## Tailwind CSS
+
+- Using important when tailwind css is overwritten or adding to scss?
+
+
+
 ## Templates
+
+### Actions
+
+- Triggering single boolean property, use `action` or `mut`?
+
+### Block Syntax
 
 ### {{#each}} - Specifying Keys
 
@@ -125,6 +171,12 @@ To improve rendering speed, the `{{#each}}` helper favors reusing it's inner blo
 ```hbs
 {{#each array key="<someProp>|@index|@identity" |item|}}
 ```
+
+We should always use the key, I can't think of a reason it would hurt us.
+
+## Named Blocks
+
+- 
 
 ### Don't use partials
 
