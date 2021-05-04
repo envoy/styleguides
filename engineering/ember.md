@@ -63,17 +63,25 @@ We use [pods structure](https://ember-cli.com/user-guide/#using-pods)
 
 When using ember-cli to generate files, use `--pod`
 
-```
+``` cli
 ember g component my-component --pod
 ```
+
 ## Components
+
+### Performance Considerations
+
+- Consider component loading states. 
+
+A table component might be passed an intial set of data that's resolved when the route loads, but what happens when the user clicks a button to refetch that table data, or maybe filter the data. Without a loading state, this update to the page could seem jarring.
+
+Options for a dropdown menu component might depend on data fetched remotely or from a large set of data already in memory that's expensive to iterate through. We should consider what the user is looking at while this data loads, hopefully not a big white empty space. This specifically is a good place for a skelton view which directs the eye to where the data will be when its fully resolved. 
 
 ### Do not create components in zapatos
 
 We used to share components by adding it to zapatos, but we're moving away from this practice. Please share components by adding it to `/components`
 
 ## Computed Properties
-
 
 ### Avoid explicit getters
 
@@ -115,6 +123,21 @@ fullName: computed('firstName', 'lastName', {
 })
 
 ```
+
+## Routes
+
+A quote from the official [ember guides](https://guides.emberjs.com/release/routing/loading-and-error-substates/):
+
+> If you navigate to slow-model, in the model hook using Ember Data, the query may take a long time to complete. During this time, your UI isn't really giving you any feedback as to what's happening. If you're entering this route after a full page refresh, your UI will be entirely blank, as you have not actually finished fully entering any route and haven't yet displayed any templates. If you're navigating to slow-model from another route, you'll continue to see the templates from the previous route until the model finish loading, and then, boom, suddenly all the templates for slow-model load.
+
+### Performance Considerations
+
+- Make use of route loading state templates. This loading substate will be entered immediately without transitioning away from our previous route and before the new route is rightfully entered.
+- Don't return an RSVP.hash() from a route model hook unless making use of ember's route loading states. Consider that each promise returned in the hash has potential to delay first render. 
+potential to delay first render. 
+- For a model hook that returns numberous unrelated queries, consider returning an object with each query assigned to a key such as `{a: this.store.query('a), b: this.store.query('b)}` ... then in your templates you can use the promise state to decide whether that data is fully fetched, ie ... `{{#if (is-pending this.a)}} ... {{/if}}`.
+- We're not just responsible for own route hooks, parent route hooks might also take a while to resolve. From a cold page refresh the time it takes for every route in the current heirachy to resolve is how long we're waiting before first render. Without loading states the user can be left in the dust wondering why the page is unresponsive after a click. We've seen customers suffer load times as long as 30 seconds, where 10 seconds of that request was from a parent route.
+- The router pauses a route transition until the promises returned from all 3 route hooks are fulfilled.
 
 ## Templates
 
@@ -193,4 +216,42 @@ test('page title is awesome', async function(assert) {
 
   assert.equal(page.title.text, 'Awesome Title!');
 });
+```
+
+### Sparse data queries
+
+A 300k/150ms payload for fetching 1000 complete ember data models into the store might seem acceptable, but imagine down the road we require other associated data be included in that response. Our payload just went to 3meg/15seconds.
+
+Do we really need 1000 records in the store in the first place? What if we don't have to worry about the ember data store? What if we can be super specific about the record data we need right down to its attributes or its associated model's attributes? This is the usecase for fetching sparse data. 
+
+Ember data does not yet support sparse data models (or model fragments) and assumes each model is a complete representation of its data. So for now, in order to benefit from sparse data queries we must bypass the the ember data store and consume these json api doc responses directly. 
+
+There are 2 helpers in the codebase to support this approach:
+
+1. A [queryTransient](https://github.com/envoy/garaje/blob/master/app/services/store.js#L9-L18) method on our store service which behaves nearly the same as store.query. 
+2. And a [json api response formater](https://github.com/envoy/garaje/blob/master/app/utils/json-api-data-formatter.js) that queryTransient uses internally to normalize the payload with its included associations. 
+
+An example usecase:
+
+``` js
+const flowObjs = this.store.queryTransient('flow', {
+   include: 'location',
+   fields: {
+      flows: 'name,type,enabled,location,position',
+      locations: 'name,disabled',
+   },
+})
+```
+
+This will return an ArrayProxy that quacks a lot like a DSAdapterPopulatedRecordArray. Then in your templates you can do something like this.
+
+``` hbs
+  {{#each flowsObjs as |flowObj|}}
+    {{flowObj.id}}
+    {{flowObj.type}}
+    {{flowObj.data.name}}
+    {{flowObj.data.location.id}}
+    {{flowObj.data.location.type}}
+    {{flowObj.data.location.data.name}}
+  {{/each}}
 ```
