@@ -130,6 +130,10 @@ A quote from the official [ember guides](https://guides.emberjs.com/release/rout
 
 > If you navigate to slow-model, in the model hook using Ember Data, the query may take a long time to complete. During this time, your UI isn't really giving you any feedback as to what's happening. If you're entering this route after a full page refresh, your UI will be entirely blank, as you have not actually finished fully entering any route and haven't yet displayed any templates. If you're navigating to slow-model from another route, you'll continue to see the templates from the previous route until the model finish loading, and then, boom, suddenly all the templates for slow-model load.
 
+## Ember Data
+
+[Ember data doc](https://docs.google.com/document/d/1GkJfa677v1eNkWfcwcmONMIaKHV6otZjBLOsVjDbpdY/edit?usp=sharing)
+
 ### Performance Considerations
 
 - Make use of route loading state templates. This loading substate will be entered immediately without transitioning away from our previous route and before the new route is rightfully entered.
